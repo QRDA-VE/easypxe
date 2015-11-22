@@ -1,4 +1,16 @@
-commit 171527b82b86232d64f9c2612d37778a3a486d1c (HEAD, origin/master, origin/HEAD, master)
+commit 5bb212edc025278dab989b933eeed348a97d4d01 (HEAD, origin/master, origin/HEAD, master)
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 13:56:00 2015 -0430
+
+    * se empiezan a colocar los comandos para ubuntu
+
+commit 3e2b3116f0ef003c42ec3dbde9d4fe8b13fc2216
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 13:33:26 2015 -0430
+
+    * changelog
+
+commit 171527b82b86232d64f9c2612d37778a3a486d1c
 Author: jose perez <sinfallas@gmail.com>
 Date:   Sun Nov 22 13:32:49 2015 -0430
 
