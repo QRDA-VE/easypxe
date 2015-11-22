@@ -11,6 +11,10 @@ echo "$BASHPID" > /run/$0.pid
 quien=$(who | cut -d' ' -f1 | sort | uniq)
 
 function iptables_clean () {
+	if [[ -f /root/.listo ]]; then
+		echo -e "\e[00;31mERROR: easypxe ya se ha ejecutado en este pc.\e[00m"
+		exit 1
+	fi
 	iptables-save >> /home/"$quien"/iptables.save
 	iptables -F
 	iptables -X
@@ -25,17 +29,16 @@ function iptables_clean () {
 }
 
 function primeros () {
-apt-get -q update
-apt-get -y install dnsmasq nfs-kernel-server tftpd-hpa
-mkdir -p /var/lib/tftpboot
-mkdir -p /opt/nfs
-echo "dhcp-range=192.168.1.200,192.168.1.250,12h" >> /etc/dnsmasq.conf
-echo "dhcp-no-override" >> /etc/dnsmasq.conf
-echo "dhcp-boot=pxelinux.0" >> /etc/dnsmasq.conf
-echo "enable-tftp" >> /etc/dnsmasq.conf
-echo "tftp-root=/var/lib/tftpboot" >> /etc/dnsmasq.conf
-echo "/opt/nfs	*(rw,no_root_squash,async,no_subtree_check)" >> /etc/exports
-exportfs -a
+	apt-get -q update
+	apt-get -y install dnsmasq nfs-kernel-server tftpd-hpa
+	mkdir -p /var/lib/tftpboot
+	mkdir -p /opt/nfs
+	echo "dhcp-range=192.168.1.200,192.168.1.250,12h" >> /etc/dnsmasq.conf
+	echo "dhcp-no-override" >> /etc/dnsmasq.conf
+	echo "enable-tftp" >> /etc/dnsmasq.conf
+	echo "tftp-root=/var/lib/tftpboot" >> /etc/dnsmasq.conf
+	echo "/opt/nfs	*(rw,no_root_squash,async,no_subtree_check)" >> /etc/exports
+	exportfs -a
 }
 
 function limpieza () {
@@ -47,12 +50,14 @@ function limpieza () {
 	rm -rf /tmp/*
 	rm -rf /var/tmp/*
 	echo -e "\e[00;1;92mFinalizado...\e[00m"
+	touch /root/.listo
 }
 
 case "$1" in
 	debian)
 		iptables_clean
 		primeros
+		echo "dhcp-boot=pxelinux.0" >> /etc/dnsmasq.conf
 		systemctl restart dnsmasq.service
 		wget -O - http://httpredir.debian.org/debian/dists/jessie/main/installer-i386/current/images/netboot/netboot.tar.gz > /var/lib/tftpboot/netboot.tar.gz
 		cd /var/lib/tftpboot/
@@ -64,7 +69,12 @@ case "$1" in
 	ubuntu)
 		iptables_clean
 		primeros
+		echo "dhcp-boot=pxelinux.0,roo,192.168.1.1" >> /etc/dnsmasq.conf
 		systemctl restart dnsmasq.service
+		wget -O - http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/netboot.tar.gz > /var/lib/tftpboot/netboot.tar.gz
+		cd /var/lib/tftpboot/
+		tar -xzf netboot.tar.gz
+		rm -f /var/lib/tftpboot/netboot.tar.gz
 		limpieza
 		;;
 
