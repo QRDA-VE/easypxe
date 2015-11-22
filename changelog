@@ -1,4 +1,18 @@
-commit b2a4e54039b2187a81f468a90cbcf4d5671aa582 (HEAD, origin/master, origin/HEAD, master)
+commit 171527b82b86232d64f9c2612d37778a3a486d1c (HEAD, origin/master, origin/HEAD, master)
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 13:32:49 2015 -0430
+
+    * se agrega nfs
+    * se agrega limpieza
+    * se descarga el netboot para debian
+
+commit d71f93457569129b5caa3cd12d7824527c4f16d0
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 12:28:00 2015 -0430
+
+    * changelog
+
+commit b2a4e54039b2187a81f468a90cbcf4d5671aa582
 Author: jose perez <sinfallas@gmail.com>
 Date:   Sun Nov 22 12:27:15 2015 -0430
 
