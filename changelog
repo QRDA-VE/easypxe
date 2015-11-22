@@ -1,4 +1,17 @@
-commit 2bab93103eae582b71c99b302219b87f922a4d78 (HEAD, origin/master, origin/HEAD, master)
+commit b2a4e54039b2187a81f468a90cbcf4d5671aa582 (HEAD, origin/master, origin/HEAD, master)
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 12:27:15 2015 -0430
+
+    * se crean las funciones basicas
+    * se coloca "case" para tener los procedimientos de las diferentes distros
+
+commit 7d89c476a3d7a5dec5799d659a6269b9b6c99db7
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 11:38:57 2015 -0430
+
+    * changelog
+
+commit 2bab93103eae582b71c99b302219b87f922a4d78
 Author: jose perez <sinfallas@gmail.com>
 Date:   Sun Nov 22 11:38:43 2015 -0430
 
