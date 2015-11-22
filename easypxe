@@ -28,15 +28,17 @@ function primeros () {
 apt-get -q update
 apt-get -y install dnsmasq nfs-kernel-server tftpd-hpa
 mkdir -p /var/lib/tftpboot
-echo "dhcp-range=192.168.1.223,192.168.1.254,12h" >> /etc/dnsmasq.conf
+mkdir -p /opt/nfs
+echo "dhcp-range=192.168.1.200,192.168.1.250,12h" >> /etc/dnsmasq.conf
 echo "dhcp-no-override" >> /etc/dnsmasq.conf
 echo "dhcp-boot=pxelinux.0" >> /etc/dnsmasq.conf
 echo "enable-tftp" >> /etc/dnsmasq.conf
 echo "tftp-root=/var/lib/tftpboot" >> /etc/dnsmasq.conf
+echo "/opt/nfs	*(rw,no_root_squash,async,no_subtree_check)" >> /etc/exports
+exportfs -a
 }
 
 function limpieza () {
-	#restaurar iptables
 	history -c
 	apt-get clean
 	rm -rf /root/.local/share/Trash/*
@@ -44,6 +46,7 @@ function limpieza () {
 	rm -rf /home/*/.cache/*
 	rm -rf /tmp/*
 	rm -rf /var/tmp/*
+	echo -e "\e[00;1;92mFinalizado...\e[00m"
 }
 
 case "$1" in
@@ -51,6 +54,10 @@ case "$1" in
 		iptables_clean
 		primeros
 		systemctl restart dnsmasq.service
+		wget -O - http://httpredir.debian.org/debian/dists/jessie/main/installer-i386/current/images/netboot/netboot.tar.gz > /var/lib/tftpboot/netboot.tar.gz
+		cd /var/lib/tftpboot/
+		tar -xzf netboot.tar.gz
+		rm -f /var/lib/tftpboot/netboot.tar.gz
 		limpieza
 		;;
 
