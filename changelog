@@ -1,4 +1,16 @@
-commit e8dcf2efe0b2ae009b15114a62d221527929010b (HEAD, origin/master, origin/HEAD, master)
+commit 2bab93103eae582b71c99b302219b87f922a4d78 (HEAD, origin/master, origin/HEAD, master)
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 11:38:43 2015 -0430
+
+    * primeros pasos
+
+commit 8d8c0660ffda743cdd058ee236f6f46e70064f06
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sat Nov 21 23:38:54 2015 -0430
+
+    * changelog
+
+commit e8dcf2efe0b2ae009b15114a62d221527929010b
 Author: jose perez <sinfallas@gmail.com>
 Date:   Sat Nov 21 23:38:38 2015 -0430
 
