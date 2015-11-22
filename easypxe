@@ -8,26 +8,71 @@ if [[ $USER != root ]]; then
 fi
 trap "rm -f /run/$0.pid; exit" INT TERM EXIT
 echo "$BASHPID" > /run/$0.pid
+quien=$(who | cut -d' ' -f1 | sort | uniq)
 
+function iptables_clean () {
+	iptables-save >> /home/"$quien"/iptables.save
+	iptables -F
+	iptables -X
+	iptables -Z
+	iptables -t nat -F
+	iptables -t nat -X
+	iptables -t mangle -F
+	iptables -t mangle -X
+	iptables -P INPUT ACCEPT
+	iptables -P FORWARD ACCEPT
+	iptables -P OUTPUT ACCEPT
+}
 
-
-
-
+function primeros () {
+apt-get -q update
 apt-get -y install dnsmasq nfs-kernel-server tftpd-hpa
 mkdir -p /var/lib/tftpboot
-
 echo "dhcp-range=192.168.1.223,192.168.1.254,12h" >> /etc/dnsmasq.conf
 echo "dhcp-no-override" >> /etc/dnsmasq.conf
 echo "dhcp-boot=pxelinux.0" >> /etc/dnsmasq.conf
 echo "enable-tftp" >> /etc/dnsmasq.conf
 echo "tftp-root=/var/lib/tftpboot" >> /etc/dnsmasq.conf
+}
 
-systemctl restart dnsmasq.service
+function limpieza () {
+	#restaurar iptables
+	history -c
+	apt-get clean
+	rm -rf /root/.local/share/Trash/*
+	rm -rf /home/*/.local/share/Trash/*
+	rm -rf /home/*/.cache/*
+	rm -rf /tmp/*
+	rm -rf /var/tmp/*
+}
 
+case "$1" in
+	debian)
+		iptables_clean
+		primeros
+		systemctl restart dnsmasq.service
+		limpieza
+		;;
 
+	ubuntu)
+		iptables_clean
+		primeros
+		systemctl restart dnsmasq.service
+		limpieza
+		;;
 
+	mint)
+		iptables_clean
+		primeros
+		systemctl restart dnsmasq.service
+		limpieza
+		;;
 
+	*)
+		echo "USO: $0 {debian|ubuntu|mint}"
+		;;
 
+esac
 
 rm -f /run/$0.pid
 trap - INT TERM EXIT
