@@ -13,11 +13,16 @@ echo "$BASHPID" > /run/$0.pid
 
 
 
+apt-get -y install dnsmasq nfs-kernel-server tftpd-hpa
+mkdir -p /var/lib/tftpboot
 
+echo "dhcp-range=192.168.1.223,192.168.1.254,12h" >> /etc/dnsmasq.conf
+echo "dhcp-no-override" >> /etc/dnsmasq.conf
+echo "dhcp-boot=pxelinux.0" >> /etc/dnsmasq.conf
+echo "enable-tftp" >> /etc/dnsmasq.conf
+echo "tftp-root=/var/lib/tftpboot" >> /etc/dnsmasq.conf
 
-
-
-
+systemctl restart dnsmasq.service
 
 
 
