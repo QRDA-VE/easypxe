@@ -1,4 +1,16 @@
-commit 5bb212edc025278dab989b933eeed348a97d4d01 (HEAD, origin/master, origin/HEAD, master)
+commit ee1ac4178a80a87449c1fca1d44d0ca9540202a7 (HEAD, origin/master, origin/HEAD, master)
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 14:18:43 2015 -0430
+
+    * se agrega el archivo doc
+
+commit afb221fc15a375ac485ffbd49cddb7c46d72b5ac
+Author: jose perez <sinfallas@gmail.com>
+Date:   Sun Nov 22 13:56:20 2015 -0430
+
+    * changelog
+
+commit 5bb212edc025278dab989b933eeed348a97d4d01
 Author: jose perez <sinfallas@gmail.com>
 Date:   Sun Nov 22 13:56:00 2015 -0430
 
